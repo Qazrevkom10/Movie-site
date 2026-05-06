@@ -71,6 +71,11 @@ function renderGenres() {
   });
 }
 
+function getWatchUrl(movie) {
+  const query = encodeURIComponent(`${movie.title} ${movie.year} смотреть онлайн легально`);
+  return `https://yandex.kz/search/?text=${query}`;
+}
+
 function movieMatches(movie, query, genre) {
   const haystack = `${movie.title} ${movie.genre} ${movie.studio} ${movie.mood} ${movie.description}`.toLowerCase();
   const byQuery = haystack.includes(query.toLowerCase().trim());
@@ -96,6 +101,7 @@ function renderMovies() {
           <span>${movie.genre}</span>
           <span>${movie.mood}</span>
         </div>
+        <a class="watch-btn" href="${getWatchUrl(movie)}" target="_blank" rel="noopener noreferrer">Смотреть</a>
       </div>
     </article>
   `).join("");
@@ -116,3 +122,4 @@ renderTopList();
 
 searchInput.addEventListener("input", renderMovies);
 genreSelect.addEventListener("change", renderMovies);
+

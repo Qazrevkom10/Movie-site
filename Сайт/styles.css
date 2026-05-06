@@ -323,6 +323,26 @@ input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgb
   font-weight: 800;
 }
 
+.watch-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 46px;
+  margin-top: 16px;
+  border-radius: 16px;
+  color: #15110b;
+  background: linear-gradient(135deg, var(--gold), #ff9d43);
+  font-weight: 900;
+  box-shadow: 0 12px 34px rgba(255, 159, 67, .2);
+  transition: transform .2s ease, filter .2s ease;
+}
+
+.watch-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
 .empty {
   margin: 30px 0;
   color: var(--muted);
@@ -402,3 +422,4 @@ footer p { margin: 0; }
   .movie-card { min-height: 290px; }
   footer { flex-direction: column; }
 }
+
