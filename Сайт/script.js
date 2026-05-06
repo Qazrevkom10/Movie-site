@@ -52,6 +52,52 @@
 ];
 
 const accents = ["#ffcf5a", "#ff6a3d", "#2ee6c8", "#ff3d5a", "#8bd450", "#5aa7ff"];
+const wikiPages = {
+  "Project Hail Mary": "Project Hail Mary (film)",
+  "The Super Mario Galaxy Movie": "The Super Mario Galaxy Movie",
+  "The Housemaid": "The Housemaid (2025 film)",
+  "Anaconda": "Anaconda (2025 film)",
+  "Send Help": "Send Help (film)",
+  "Avatar: Fire and Ash": "Avatar: Fire and Ash",
+  "Masters of the Universe": "Masters of the Universe (film)",
+  "One Battle After Another": "One Battle After Another",
+  "Mercy": "Mercy (2026 film)",
+  "Hoppers": "Hoppers (film)",
+  "Ready or Not 2: Here I Come": "Ready or Not 2: Here I Come",
+  "Backrooms": "The Backrooms (film)",
+  "Sinners": "Sinners (2025 film)",
+  "Superman": "Superman (2025 film)",
+  "F1": "F1 (film)",
+  "Mission: Impossible - The Final Reckoning": "Mission: Impossible – The Final Reckoning",
+  "Thunderbolts": "Thunderbolts*",
+  "Mickey 17": "Mickey 17",
+  "The Fantastic Four: First Steps": "The Fantastic Four: First Steps",
+  "How to Train Your Dragon": "How to Train Your Dragon (2025 film)",
+  "Jurassic World Rebirth": "Jurassic World Rebirth",
+  "Captain America: Brave New World": "Captain America: Brave New World",
+  "A Minecraft Movie": "A Minecraft Movie",
+  "Lilo & Stitch": "Lilo & Stitch (2025 film)",
+  "Elio": "Elio (film)",
+  "28 Years Later": "28 Years Later",
+  "Ballerina": "Ballerina (2025 film)",
+  "The Conjuring: Last Rites": "The Conjuring: Last Rites",
+  "Wicked: For Good": "Wicked: For Good",
+  "Tron: Ares": "Tron: Ares",
+  "Now You See Me: Now You Don't": "Now You See Me: Now You Don't",
+  "Zootopia 2": "Zootopia 2",
+  "Five Nights at Freddy's 2": "Five Nights at Freddy's 2",
+  "Michael": "Michael (2025 film)",
+  "Scream 7": "Scream 7",
+  "The Devil Wears Prada 2": "The Devil Wears Prada 2",
+  "Reminders of Him": "Reminders of Him (film)",
+  "Mortal Kombat 2": "Mortal Kombat 2",
+  "The Mandalorian and Grogu": "The Mandalorian and Grogu",
+  "Toy Story 5": "Toy Story 5",
+  "Evil Dead Burn": "Evil Dead Burn",
+  "Spider-Man: Brand New Day": "Spider-Man: Brand New Day",
+  "Avengers: Doomsday": "Avengers: Doomsday"
+};
+
 const grid = document.querySelector("#movieGrid");
 const topList = document.querySelector("#topList");
 const genreSelect = document.querySelector("#genreSelect");
@@ -76,27 +122,66 @@ function getWatchUrl(movie) {
   return `https://yandex.kz/search/?text=${query}`;
 }
 
-function getPosterQuery(movie) {
-  return encodeURIComponent(`${movie.title} ${movie.year} film poster`);
+function getFallbackPoster(movie, index) {
+  const accent = accents[index % accents.length];
+  const title = movie.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const genre = movie.genre.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900">
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#111827"/>
+          <stop offset="0.52" stop-color="#1f2937"/>
+          <stop offset="1" stop-color="${accent}" stop-opacity="0.85"/>
+        </linearGradient>
+        <radialGradient id="glow" cx="70%" cy="20%" r="65%">
+          <stop stop-color="${accent}" stop-opacity="0.95"/>
+          <stop offset="1" stop-color="${accent}" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="600" height="900" fill="url(#bg)"/>
+      <rect width="600" height="900" fill="url(#glow)"/>
+      <circle cx="120" cy="145" r="52" fill="none" stroke="#fff" stroke-opacity="0.55" stroke-width="12"/>
+      <circle cx="120" cy="145" r="12" fill="#fff" fill-opacity="0.55"/>
+      <path d="M70 770 C170 710, 250 820, 360 750 S520 710, 560 780" fill="none" stroke="#fff" stroke-opacity="0.35" stroke-width="10"/>
+      <text x="50" y="560" fill="#fff" font-family="Arial, sans-serif" font-size="42" font-weight="800">${title}</text>
+      <text x="50" y="625" fill="#ffcf5a" font-family="Arial, sans-serif" font-size="28" font-weight="700">${genre}</text>
+      <text x="50" y="705" fill="#fff" fill-opacity="0.76" font-family="Arial, sans-serif" font-size="22">poster loading...</text>
+    </svg>`;
+
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
 
-function getFallbackPoster(movie, index) {
-  const title = encodeURIComponent(movie.title);
-  const genre = encodeURIComponent(movie.genre);
-  const accent = accents[index % accents.length].replace("#", "");
-  return `https://placehold.co/600x900/111827/${accent}?text=${title}%0A${genre}`;
+function getPageImageFromData(data) {
+  const page = data.query?.pages ? Object.values(data.query.pages)[0] : null;
+  return page?.thumbnail?.source || "";
+}
+
+async function fetchPosterByTitle(pageTitle) {
+  const api = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageTitle)}&redirects=1&prop=pageimages&pithumbsize=900&format=json&origin=*`;
+  const response = await fetch(api);
+  const data = await response.json();
+  return getPageImageFromData(data);
+}
+
+async function fetchPosterBySearch(movie) {
+  const search = encodeURIComponent(`${movie.title} ${movie.year} film`);
+  const api = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${search}&gsrlimit=3&prop=pageimages&pithumbsize=900&format=json&origin=*`;
+  const response = await fetch(api);
+  const data = await response.json();
+  const pages = data.query?.pages ? Object.values(data.query.pages) : [];
+  const page = pages.find(item => item.thumbnail?.source);
+  return page?.thumbnail?.source || "";
 }
 
 async function loadPoster(img, movie) {
-  const api = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${getPosterQuery(movie)}&gsrlimit=1&prop=pageimages&pithumbsize=700&format=json&origin=*`;
-
   try {
-    const response = await fetch(api);
-    const data = await response.json();
-    const page = data.query?.pages ? Object.values(data.query.pages)[0] : null;
+    const exactTitle = wikiPages[movie.title];
+    const poster = exactTitle ? await fetchPosterByTitle(exactTitle) : "";
+    const backupPoster = poster || await fetchPosterBySearch(movie);
 
-    if (page?.thumbnail?.source) {
-      img.src = page.thumbnail.source;
+    if (backupPoster) {
+      img.src = backupPoster;
       img.classList.add("is-loaded");
     }
   } catch (error) {
@@ -154,5 +239,6 @@ renderTopList();
 
 searchInput.addEventListener("input", renderMovies);
 genreSelect.addEventListener("change", renderMovies);
+
 
 
