@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>КиноПульс - новые фильмы 2025-2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Unbounded:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="hero">
+    <nav class="nav">
+      <a class="logo" href="#top" aria-label="КиноПульс">
+        <span>Кино</span>Пульс
+      </a>
+      <div class="nav-links">
+        <a href="#movies">Фильмы</a>
+        <a href="#top10">Топ</a>
+        <a href="#about">О сайте</a>
+      </div>
+    </nav>
+
+    <section class="hero-grid" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">50 свежих фильмов 2025-2026</p>
+        <h1>Новые фильмы в одном красивом каталоге</h1>
+        <p class="hero-text">Выбирай кино по жанру, рейтингу и настроению. Верстка адаптивная, карточки быстрые, поиск работает сразу на странице.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#movies">Смотреть каталог</a>
+          <a class="btn ghost" href="#top10">Открыть топ</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="Премьера недели">
+        <span class="tag">Премьера недели</span>
+        <h2>Project Hail Mary</h2>
+        <p>Космическая фантастика, большой масштаб и история выживания.</p>
+        <div class="score-row">
+          <strong>8.4</strong>
+          <span>IMDb интерес</span>
+        </div>
+      </aside>
+    </section>
+  </header>
+
+  <main>
+    <section class="stats" aria-label="Статистика каталога">
+      <article><strong>50</strong><span>фильмов</span></article>
+      <article><strong>2025-2026</strong><span>годы</span></article>
+      <article><strong>9</strong><span>жанров</span></article>
+      <article><strong>0</strong><span>установок</span></article>
+    </section>
+
+    <section class="controls" id="movies">
+      <div>
+        <p class="eyebrow">Каталог</p>
+        <h2>Новые фильмы</h2>
+      </div>
+      <div class="tools">
+        <label class="search">
+          <span>Поиск</span>
+          <input id="searchInput" type="search" placeholder="Например: Avatar, horror, Disney" autocomplete="off" />
+        </label>
+        <label class="select-wrap">
+          <span>Жанр</span>
+          <select id="genreSelect">
+            <option value="all">Все жанры</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="movie-grid" id="movieGrid" aria-live="polite"></section>
+    <p class="empty" id="emptyState" hidden>Ничего не найдено. Попробуй другой запрос или жанр.</p>
+
+    <section class="top-panel" id="top10">
+      <div>
+        <p class="eyebrow">Быстрый выбор</p>
+        <h2>10 фильмов для старта</h2>
+      </div>
+      <ol id="topList"></ol>
+    </section>
+
+    <section class="about" id="about">
+      <p class="eyebrow">О сайте</p>
+      <h2>Сайт сделан как готовая витрина фильмов</h2>
+      <p>Можно менять список в файле <b>script.js</b>: добавлять постеры, ссылки на трейлеры, описания и оценки. Сейчас сайт работает полностью локально и не требует сервера.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>КиноПульс</span>
+    <p>Подборка составлена для демонстрационного сайта с актуальными фильмами 2025-2026.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
