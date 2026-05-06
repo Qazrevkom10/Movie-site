@@ -267,12 +267,11 @@ input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgb
 
 .movie-card {
   position: relative;
-  min-height: 330px;
+  min-height: 520px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   overflow: hidden;
-  padding: 20px;
+  padding: 0;
   border-radius: 24px;
   border: 1px solid rgba(255,255,255,.13);
   background: linear-gradient(160deg, rgba(255,255,255,.12), rgba(255,255,255,.045));
@@ -286,15 +285,48 @@ input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgb
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    radial-gradient(circle at 75% 20%, var(--accent), transparent 7rem),
-    linear-gradient(to top, rgba(0,0,0,.74), transparent 70%);
-  opacity: .75;
+  background: radial-gradient(circle at 75% 20%, var(--accent), transparent 8rem);
+  opacity: .45;
 }
 
 .movie-card:hover { transform: translateY(-6px); transition: transform .22s ease; }
 
-.card-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.poster-wrap {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(255,255,255,.12), rgba(0,0,0,.55));
+}
+
+.poster-wrap::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(11,14,19,.96), transparent);
+  pointer-events: none;
+}
+
+.poster-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: saturate(1.08) contrast(1.04);
+  transform: scale(1.01);
+}
+
+.movie-card:hover .poster-image { transform: scale(1.06); transition: transform .35s ease; }
+
+.card-top {
+  position: absolute;
+  inset: 14px 14px auto;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
 .year, .rating {
   padding: 7px 10px;
   border-radius: 999px;
@@ -304,7 +336,14 @@ input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgb
   font-weight: 800;
 }
 
-.movie-card h3 { margin: auto 0 8px; font-size: 22px; line-height: 1.1; }
+.movie-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 18px;
+}
+
+.movie-card h3 { margin: 0 0 8px; font-size: 21px; line-height: 1.1; }
 .movie-card p { margin: 0; color: #d9d0bd; line-height: 1.5; font-size: 14px; }
 
 .meta {
@@ -324,6 +363,7 @@ input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgb
 }
 
 .watch-btn {
+  margin-top: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -422,4 +462,5 @@ footer p { margin: 0; }
   .movie-card { min-height: 290px; }
   footer { flex-direction: column; }
 }
+
 

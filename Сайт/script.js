@@ -76,6 +76,34 @@ function getWatchUrl(movie) {
   return `https://yandex.kz/search/?text=${query}`;
 }
 
+function getPosterQuery(movie) {
+  return encodeURIComponent(`${movie.title} ${movie.year} film poster`);
+}
+
+function getFallbackPoster(movie, index) {
+  const title = encodeURIComponent(movie.title);
+  const genre = encodeURIComponent(movie.genre);
+  const accent = accents[index % accents.length].replace("#", "");
+  return `https://placehold.co/600x900/111827/${accent}?text=${title}%0A${genre}`;
+}
+
+async function loadPoster(img, movie) {
+  const api = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${getPosterQuery(movie)}&gsrlimit=1&prop=pageimages&pithumbsize=700&format=json&origin=*`;
+
+  try {
+    const response = await fetch(api);
+    const data = await response.json();
+    const page = data.query?.pages ? Object.values(data.query.pages)[0] : null;
+
+    if (page?.thumbnail?.source) {
+      img.src = page.thumbnail.source;
+      img.classList.add("is-loaded");
+    }
+  } catch (error) {
+    img.alt = `${movie.title} poster unavailable`;
+  }
+}
+
 function movieMatches(movie, query, genre) {
   const haystack = `${movie.title} ${movie.genre} ${movie.studio} ${movie.mood} ${movie.description}`.toLowerCase();
   const byQuery = haystack.includes(query.toLowerCase().trim());
@@ -90,11 +118,14 @@ function renderMovies() {
 
   grid.innerHTML = filtered.map((movie, index) => `
     <article class="movie-card" style="--accent: ${accents[index % accents.length]}; animation-delay: ${Math.min(index * 0.025, 0.4)}s">
-      <div class="card-top">
-        <span class="year">${movie.year}</span>
-        <span class="rating">${movie.rating.toFixed(1)}</span>
+      <div class="poster-wrap">
+        <img class="poster-image" src="${getFallbackPoster(movie, index)}" alt="Постер фильма ${movie.title}" loading="lazy" data-poster-index="${index}">
+        <div class="card-top">
+          <span class="year">${movie.year}</span>
+          <span class="rating">${movie.rating.toFixed(1)}</span>
+        </div>
       </div>
-      <div>
+      <div class="movie-info">
         <h3>${movie.title}</h3>
         <p>${movie.description}</p>
         <div class="meta">
@@ -106,6 +137,7 @@ function renderMovies() {
     </article>
   `).join("");
 
+  grid.querySelectorAll(".poster-image").forEach((img, index) => loadPoster(img, filtered[index]));
   emptyState.hidden = filtered.length > 0;
 }
 
@@ -122,4 +154,5 @@ renderTopList();
 
 searchInput.addEventListener("input", renderMovies);
 genreSelect.addEventListener("change", renderMovies);
+
 
