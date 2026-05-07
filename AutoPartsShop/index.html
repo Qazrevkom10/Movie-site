@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TurboParts Pro - интернет-магазин автозапчастей</title>
+  <meta name="description" content="Профессиональный магазин автозапчастей и автоаксессуаров: подбор по VIN, каталог расходников, тормозов, электрики, масел и товаров для салона." />
+  <meta name="keywords" content="автозапчасти, подбор по VIN, купить запчасти, масла, фильтры, тормозные колодки, аккумуляторы, автоаксессуары" />
+  <link rel="canonical" href="https://example.kz/" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="header-top">
+      <a class="brand" href="#top" aria-label="TurboParts Pro">
+        <span class="brand-mark">TP</span>
+        <span>
+          <b>TurboParts Pro</b>
+          <small>Автозапчасти и аксессуары</small>
+        </span>
+      </a>
+
+      <form class="header-search" id="heroSearch">
+        <input id="quickSearch" type="search" placeholder="Поиск по артикулу, VIN, названию или марке авто" aria-label="Поиск товара" />
+        <button type="submit">Найти</button>
+      </form>
+
+      <div class="header-actions">
+        <a class="phone" href="tel:+77770000000">+7 777 000 00 00</a>
+        <button class="cart-button" type="button" id="openCart" aria-label="Открыть корзину">
+          Корзина <b id="cartCount">0</b>
+        </button>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Навигация">
+      <a href="#selection">Подбор по авто</a>
+      <a href="#catalog">Каталог</a>
+      <a href="#brands">Бренды</a>
+      <a href="#delivery">Доставка</a>
+      <a href="#contacts">Заявка</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Оригинальные и проверенные аналоги</p>
+        <h1>Запчасти для обслуживания и ремонта без долгих поисков</h1>
+        <p class="lead">Макет магазина для реальных продаж: подбор по VIN, быстрые фильтры, складские позиции, корзина и заявка менеджеру.</p>
+        <div class="hero-actions">
+          <a class="primary-link" href="#catalog">Перейти в каталог</a>
+          <a class="secondary-link" href="#contacts">Запросить подбор</a>
+        </div>
+        <div class="trust-row" aria-label="Преимущества">
+          <span>Проверка совместимости</span>
+          <span>Наличие на складе</span>
+          <span>Документы и гарантия</span>
+        </div>
+      </div>
+
+      <div class="hero-panel" aria-label="Складские позиции">
+        <div class="panel-head">
+          <span>Склад сегодня</span>
+          <b>8 240 позиций</b>
+        </div>
+        <div class="inventory-list">
+          <article>
+            <span class="sku">OE 04152-YZZA6</span>
+            <b>Фильтр масляный Toyota</b>
+            <em>В наличии · 6 200 ₸</em>
+          </article>
+          <article>
+            <span class="sku">BOSCH 0986494501</span>
+            <b>Колодки тормозные передние</b>
+            <em>2 часа · 24 700 ₸</em>
+          </article>
+          <article>
+            <span class="sku">VARTA 75Ah</span>
+            <b>Аккумулятор Silver Dynamic</b>
+            <em>В наличии · 59 800 ₸</em>
+          </article>
+        </div>
+        <div class="warehouse-card">
+          <span>Подбор по VIN</span>
+          <strong>от 15 минут</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="metrics" aria-label="Показатели магазина">
+      <article><b>12 мес</b><span>гарантия на товары</span></article>
+      <article><b>30 мин</b><span>средний ответ менеджера</span></article>
+      <article><b>3 склада</b><span>партнерская выдача</span></article>
+      <article><b>4.8 / 5</b><span>оценка покупателей</span></article>
+    </section>
+
+    <section class="selection" id="selection">
+      <div class="section-copy">
+        <p class="eyebrow">Подбор</p>
+        <h2>Уточните автомобиль и бюджет</h2>
+      </div>
+      <form class="selector-form" id="selectorForm">
+        <label>
+          Марка
+          <select id="carBrand">
+            <option value="all">Любая марка</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Hyundai">Hyundai</option>
+            <option value="Kia">Kia</option>
+            <option value="BMW">BMW</option>
+            <option value="Mercedes">Mercedes-Benz</option>
+          </select>
+        </label>
+        <label>
+          Категория
+          <select id="categoryFilter">
+            <option value="all">Все категории</option>
+            <option value="Расходники">Расходники</option>
+            <option value="Тормозная система">Тормозная система</option>
+            <option value="Электрика">Электрика</option>
+            <option value="Аксессуары">Аксессуары</option>
+            <option value="Шины и диски">Шины и диски</option>
+          </select>
+        </label>
+        <label>
+          Цена до
+          <input id="budgetFilter" type="number" min="0" step="1000" placeholder="Например 50000" />
+        </label>
+        <button type="submit">Применить</button>
+      </form>
+    </section>
+
+    <section class="catalog-layout" id="catalog">
+      <aside class="catalog-sidebar">
+        <p class="eyebrow">Каталог</p>
+        <h2>Группы товаров</h2>
+        <div class="tabs" role="tablist" aria-label="Фильтр каталога">
+          <button class="tab active" type="button" data-category="all">Все товары</button>
+          <button class="tab" type="button" data-category="Расходники">Расходники</button>
+          <button class="tab" type="button" data-category="Тормозная система">Тормозная система</button>
+          <button class="tab" type="button" data-category="Электрика">Электрика</button>
+          <button class="tab" type="button" data-category="Аксессуары">Аксессуары</button>
+        </div>
+      </aside>
+
+      <section class="catalog-main">
+        <div class="catalog-head">
+          <div>
+            <h2>Популярные позиции</h2>
+            <p>Демо-каталог показывает, как будет выглядеть реальная витрина с артикулами, остатками и ценами.</p>
+          </div>
+          <span id="resultCount">0 товаров</span>
+        </div>
+        <div class="products" id="products" aria-live="polite"></div>
+      </section>
+    </section>
+
+    <section class="brand-section" id="brands">
+      <div class="section-copy">
+        <p class="eyebrow">Бренды</p>
+        <h2>Поставщики и аналоги</h2>
+      </div>
+      <div class="brand-grid" aria-label="Бренды автозапчастей">
+        <span>BOSCH</span>
+        <span>NGK</span>
+        <span>KYB</span>
+        <span>MANN</span>
+        <span>DENSO</span>
+        <span>VARTA</span>
+      </div>
+    </section>
+
+    <section class="delivery" id="delivery">
+      <div class="section-copy">
+        <p class="eyebrow">Логистика</p>
+        <h2>Как клиент получает заказ</h2>
+      </div>
+      <div class="delivery-grid">
+        <article>
+          <b>01</b>
+          <h3>Проверяем совместимость</h3>
+          <p>Менеджер сверяет артикул, VIN или параметры авто перед оплатой.</p>
+        </article>
+        <article>
+          <b>02</b>
+          <h3>Резервируем товар</h3>
+          <p>Позиция закрепляется за заказом на складе или у поставщика.</p>
+        </article>
+        <article>
+          <b>03</b>
+          <h3>Передаем покупателю</h3>
+          <p>Самовывоз, курьер по городу или отправка транспортной компанией.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="contacts" id="contacts">
+      <div class="section-copy">
+        <p class="eyebrow">Заявка</p>
+        <h2>Нужна конкретная деталь?</h2>
+        <p>Оставьте данные, марку, модель, год выпуска или VIN. В рабочей версии форма будет отправляться в WhatsApp, Telegram или CRM.</p>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <input type="text" placeholder="Ваше имя" required />
+        <input type="tel" placeholder="+7 777 000 00 00" required />
+        <textarea placeholder="Например: Toyota Camry 2018, нужен комплект фильтров и масло"></textarea>
+        <button type="submit">Отправить запрос</button>
+        <p class="form-message" id="formMessage"></p>
+      </form>
+    </section>
+  </main>
+
+  <aside class="cart-panel" id="cartPanel" aria-hidden="true">
+    <div class="cart-window">
+      <div class="cart-head">
+        <h2>Корзина</h2>
+        <button type="button" id="closeCart" aria-label="Закрыть корзину">×</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-total">
+        <span>Итого</span>
+        <strong id="cartTotal">0 ₸</strong>
+      </div>
+      <button class="checkout" type="button" id="checkoutButton">Оформить заказ</button>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    <b>TurboParts Pro</b>
+    <span>Демо-макет интернет-магазина автозапчастей</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
